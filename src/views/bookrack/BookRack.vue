@@ -10,7 +10,15 @@
       </van-cell>
     </van-sticky>
     <!-- 书籍列表区域 -->
-    <book-list />
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <van-cell v-for="item in list" :key="item" :title="item" />
+      <book-list />
+    </van-list>
   </div>
 </template>
 
@@ -20,11 +28,37 @@ export default {
   name: 'BookRack',
   data () {
     return {
-
+      list: [],
+      loading: false,
+      finished: false
     }
   },
   components: {
     BookList
+  },
+  created () {
+    this.getBookList(4)
+  },
+  methods: {
+    async getBookList (id) {
+      const res = await this.$axios.get('http://127.0.0.1:3333/booklist/' + id)
+      console.log(res)
+    },
+    onLoad () {
+      // 异步更新数据
+      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+
+      for (let i = 0; i < 10; i++) {
+        // this.getBookList(i)
+      }
+
+      // 加载状态结束
+      this.loading = false
+
+      // 数据全部加载完成
+
+      this.finished = true
+    }
   }
 }
 </script>

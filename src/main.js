@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 引入axios
+import axios from 'axios'
 // 导入全局样式
 import '@/style/index.scss'
 // 导入Vant组件库
@@ -13,6 +15,7 @@ import 'amfe-flexible'
 // 全局挂载Vant
 Vue.use(Vant)
 Vue.config.productionTip = false
+Vue.prototype.$axios = axios
 
 new Vue({
   router,
