@@ -3,8 +3,12 @@
 </template>
 
 <script>
+
+// import BookCitySearch from './components/bookCcty-search'
+
 export default {
-  name: 'BookCity'
+  name: 'BookCity',
+  components: { }
 }
 </script>
 

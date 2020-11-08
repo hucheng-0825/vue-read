@@ -26,6 +26,11 @@ const router = new VueRouter({
           component: () => import('@/views/my/My.vue')
         }
       ]
+    },
+    {
+      path: '/bookclassification',
+      name: 'BookClassification',
+      component: () => import('@/views/bookcity/book-classification.vue')
     }
   ]
 })
