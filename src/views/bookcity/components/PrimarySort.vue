@@ -32,7 +32,7 @@
   </div>
   <div class="manlist">
     <van-grid :border="false" :column-num="3" >
-      <van-grid-item class="vgrid" :key="index" v-for="(value,index) in booknametwo"  :text="value.num">
+      <van-grid-item class="vgrid" :key="index" v-for="(value,index) in booknametwo"  :text="value.num" @click="$router.push({name:'SecondarySort',params:value})">
         <template #icon>
               <span class="objectname">{{value.title}}</span>
         </template>
