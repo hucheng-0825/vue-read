@@ -22,7 +22,7 @@
 </van-cell>
    <!-- 标签页区域  -->
 <div class="ChannelList-tag">
-  <draggable :disabled="drag" :sort= "true" v-model="upList" chosenClass="chosen" group="name" >
+  <draggable :disabled="drag" :sort= "true" v-model="upList" chosenClass="chosen" group="name" animation="300" >
    <transition-group>
      <span class="ChannelList-item" :class="index==0?'lived':''" v-for="(element,index) in upList" :key="index">
        {{element}}<van-icon name="clear" class="item-cha" v-if="index!==0&isbtn==true"  @click="shanchu(element)"/>

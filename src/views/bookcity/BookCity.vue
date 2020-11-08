@@ -54,6 +54,7 @@ export default {
   created () {
     this.getList()
     this.getBookList()
+    this.getsomeChannel()
   },
   methods: {
     async getList () {
