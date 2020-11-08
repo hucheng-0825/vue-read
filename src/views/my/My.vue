@@ -6,9 +6,9 @@
         round
         width="73px"
         height="73px"
-        src="http://5b0988e595225.cdn.sohucs.com/images/20190619/b81ca92f4db443e298405bd400dec513.jpeg"
+        :src="list.url"
       />
-      <span class="user-name">卢本伟</span>
+      <span class="user-name">{{list.name}}</span>
     </div>
     <div class="body-content">
       <van-cell
@@ -63,14 +63,25 @@ export default {
   name: 'Myindex',
   data () {
     return {
+      list: {
+      }
     }
+  },
+  created () {
+    this.getusername()
   },
   methods: {
     goCZ () {
-      console.log(111)
+      // console.log(111)
     },
     onClickLeft () {
       this.$router.back(-1)
+    },
+    async getusername () {
+      const { data } = await this.$axios.get('http://localhost:8080/t')
+      // console.log(data)
+      this.list = data.data
+      // console.log(this.list)
     }
   }
 }

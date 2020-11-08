@@ -12,7 +12,7 @@
     <!-- 账户余额区域 -->
     <div class="account-balance">
       <div class="balance">
-        <span>500</span>
+        <span>{{balance}}</span>
         <span>春卷</span>
       </div>
     </div>
@@ -29,11 +29,20 @@ export default {
   name: 'MyAccount',
   data () {
     return {
+      balance: 0
     }
+  },
+  created () {
+    this.getbalance()
   },
   methods: {
     onClickLeft () {
       this.$router.back(-1)
+    },
+    async getbalance () {
+      const { data } = await this.$axios.get('http://localhost:8080/q')
+      // console.log(data)
+      this.balance = data.data.balance
     }
   }
 }

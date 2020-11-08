@@ -10,6 +10,9 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 // 设置rem基准值
 import 'amfe-flexible'
+import axios from 'axios'
+import './mockjs/index'
+Vue.prototype.$axios = axios
 // 全局挂载Vant
 Vue.use(Vant)
 Vue.config.productionTip = false
