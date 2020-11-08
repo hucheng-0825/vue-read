@@ -46,6 +46,7 @@ export default {
   top: 180px;
   bottom: 100px;
   overflow-y: auto;
+  overflow-x: hidden;
   right: 0;
   left: 0;
 .main-image{
