@@ -31,6 +31,16 @@ const router = new VueRouter({
       path: '/search',
       name: 'SearchIndex',
       component: () => import('@/views/search/Search.vue')
+    },
+    {
+      path: '/primarysort',
+      name: 'PrimarySort',
+      component: () => import('@/views/bookcity/components/PrimarySort.vue')
+    },
+    {
+      path: '/secondarysort',
+      name: 'SecondarySort',
+      component: () => import('@/views/bookcity/components/SecondarySort.vue')
     }
   ]
 })

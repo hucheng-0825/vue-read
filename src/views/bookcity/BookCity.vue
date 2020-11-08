@@ -3,7 +3,7 @@
     <!-- 头部的搜索区域  -->
     <div class="header">
 <van-button class="header-button-left" type="default" size="large" plain hairline icon-position="right" icon="search"></van-button>
-<van-button type="default" class="header-button-right">分类</van-button>
+<van-button type="default" class="header-button-right" @click="$router.push('/primarysort')">分类</van-button>
     </div>
     <div class="main">
 <van-tabs v-model="active" class="main-tabs"    swipeable >
