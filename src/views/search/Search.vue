@@ -2,7 +2,7 @@
   <div class="search-container">
     <div class="search-bar">
       <div class="return">
-        <van-icon name="arrow-left" />
+        <van-icon name="arrow-left" @click="$router.back()" />
       </div>
       <van-search
         v-model="searchText"
@@ -13,7 +13,7 @@
         @focus="isSearchShow"
         @clear="isSearchResult=false"
       />
-      <div class="search-text">搜索</div>
+      <div class="search-text" @click="onSearch(searchText)">搜索</div>
     </div>
     <van-divider />
     <!-- 搜索结果 -->
@@ -87,7 +87,7 @@ export default {
       this.isHistory = true
     },
     async getRecommendList () {
-      const data = await this.$axios.get('http://localhost:8080/getBooks')
+      const data = await this.$axios.get('http://localhost:8080/getreCommendBooks|get')
       // console.log(data)
       this.recommendList = data.data.list
       console.log(this.recommendList)
