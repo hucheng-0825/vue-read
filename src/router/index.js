@@ -28,7 +28,9 @@ const router = new VueRouter({
         {
           path: '/my',
           name: 'Myindex',
-          component: () => import('@/views/my/My.vue')
+          component: () => import('@/views/my/My.vue'),
+          children: [
+          ]
         }
       ]
     },
@@ -46,6 +48,11 @@ const router = new VueRouter({
       path: '/secondarysort',
       name: 'SecondarySort',
       component: () => import('@/views/bookcity/components/SecondarySort.vue')
+    },
+    {
+      path: '/myaccount',
+      name: 'MyAccount',
+      component: () => import('@/views/my/components/MyAccount.vue')
     }
   ]
 })
