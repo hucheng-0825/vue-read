@@ -6,7 +6,7 @@
       <van-button type="default" class="header-button-right" @click="$router.push('/primarysort')">分类</van-button>
     </div>
     <div class="main">
-<van-tabs v-model="active" class="main-tabs"    swipeable >
+<van-tabs v-model="active" class="main-tabs"    swipeable  @click="change">
  <!-- 这是向下的箭头  -->
 <div class="lower-arrow" slot="nav-right"  @click="chuli">
     <van-icon name="arrow-down" />
@@ -48,7 +48,9 @@ export default {
       // 展示弹出层
       isShow: false,
       // 上面的一些
-      someList: []
+      someList: [],
+      // 这是所有的书籍
+      all: []
     }
   },
   created () {
@@ -60,12 +62,14 @@ export default {
     async getList () {
       const { data } = await this.$axios.get('http://localhost:8080/channels')
       // console.log(data)
+
       this.list = data
     },
     async getBookList () {
       const { data } = await this.$axios.get('http://localhost:8080/getBooks')
       // console.log(data)
       this.bookList = data
+      this.all = data
     },
 
     async getsomeChannel () {
@@ -77,6 +81,30 @@ export default {
     chuli () {
       this.isShow = true
       this.getsomeChannel()
+    },
+    // 这是随机返回的函数
+    getRandom (opt) {
+      var o = opt.arry
+      var range = opt.range
+      // 防止超过数组的长度
+      range = range > o.length ? o.length : range
+
+      var newArray = [].concat(o) // 拷贝原数组进行操作就不会破坏原数组
+      var valArray = []
+
+      for (var n = 0; n < range; n++) {
+        var r = Math.floor(Math.random() * (newArray.length))
+        valArray.push(newArray[r])
+        // 在数组删掉，然后在下轮循环中就可以避免重复获取
+        newArray.splice(r, 1)
+      }
+      return valArray
+    },
+    // 切换tab栏时
+    change () {
+      // console.log('输出')
+      // console.log(this.getRandom({ arry: this.all, range: 50 }))
+      this.bookList = this.getRandom({ arry: this.all, range: 50 })
     }
   }
 }
