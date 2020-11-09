@@ -16,7 +16,7 @@
     <!-- 内容区域  -->
 
     <!-- 导入的组件  -->
-  <book-list></book-list>
+  <book-list :list="bookList"></book-list>
   </van-tab>
 
 </van-tabs>
@@ -43,6 +43,8 @@ export default {
       active: '',
       // tab列表中的,这个是tab的channels列表
       list: [],
+      // 这个是书籍列表
+      bookList: [],
       // 展示弹出层
       isShow: false,
       // 上面的一些
@@ -51,6 +53,7 @@ export default {
   },
   created () {
     this.getList()
+    this.getBookList()
     this.getsomeChannel()
   },
   methods: {
@@ -58,6 +61,12 @@ export default {
       const { data } = await this.$axios.get('http://localhost:8080/channels')
       // console.log(data)
       this.list = data
+    },
+    async getBookList () {
+      const { data } = await this.$axios.get('http://localhost:8080/getBooks')
+      // console.log(data)
+      this.bookList = data
+      this.all = data
     },
     async getsomeChannel () {
       const { data } = await this.$axios.get('http://localhost:8080/somechannels')
