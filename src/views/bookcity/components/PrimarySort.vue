@@ -4,7 +4,7 @@
     <van-nav-bar class="headbar" title="全部分类" left-arrow   @click-left="onClickLeft"
   @click-right="onClickRight">
       <template #right>
-        <van-icon name="search" size="18" />
+        <van-icon name="search" size="18" @click="$router.push('/search')" />
       </template>
     </van-nav-bar>
 <!-- ———————————————————————————————————————————— -->

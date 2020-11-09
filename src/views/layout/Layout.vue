@@ -10,13 +10,15 @@
     -->
     <van-tabbar class="layout-tabbar" route>
       <van-tabbar-item to="/bookrack">
+        <i class="iconfont icon-shujia"></i>
         <span class="text">书架</span>
       </van-tabbar-item>
       <van-tabbar-item to="/bookcity">
+        <i class="iconfont icon-shucheng"></i>
         <span class="text">书城</span>
       </van-tabbar-item>
-
       <van-tabbar-item to="/my">
+        <i class="iconfont icon-yonghu-copy"></i>
         <span class="text">我的</span>
       </van-tabbar-item>
     </van-tabbar>
@@ -44,12 +46,26 @@ export default {
 <style scoped lang="scss">
 .layout-container {
   .layout-tabbar {
-    i.toutiao {
-      font-size: 40px;
+    border-top: 2px solid #ccc;
+    .van-tabbar-item--active{
+      color: red;
     }
-    span.text {
-      font-size: 20px;
+    .van-tabbar-item{
+      ::v-deep .van-tabbar-item__text{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .iconfont{
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+        .text{
+          font-size: 30px;
+        }
+      }
     }
+
   }
 }
 </style>

@@ -3,13 +3,12 @@
 
      <!-- 轮播图  -->
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-  <van-swipe-item><van-image class="main-image"  fit="cover" src="https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=176998383,27345077&fm=26&gp=0.jpg" /></van-swipe-item>
-  <van-swipe-item><van-image class="main-image"  fit="cover" src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4021895125,1084551872&fm=26&gp=0.jpg" /></van-swipe-item>
-  <van-swipe-item><van-image class="main-image"  fit="cover" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2497546778,4206277609&fm=26&gp=0.jpg" /></van-swipe-item>
-  <van-swipe-item><van-image class="main-image"  fit="cover" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=367462202,527001410&fm=26&gp=0.jpg" /></van-swipe-item>
-</van-swipe>
+      <van-swipe-item v-for="(item,index) in bannerImgs" :key="index">
+        <van-image class="main-image"  fit="cover" :src="item" />
+      </van-swipe-item>
+    </van-swipe>
     <!-- 每一项书籍的数据  -->
-    <div class="BookList-item" v-for="(value,index) in list" :key="index">
+    <div class="BookList-item" v-for="value in bookList" :key="value.id">
       <!-- 每一项中左边的盒子  -->
       <div class="BookList-item-left">
         <van-image class="BookList-image" fit="cover" :src="value.images" />
@@ -28,14 +27,32 @@
 <script>
 export default {
   name: 'BookList',
-  props: ['list'],
   data () {
     return {
-
+      // 这个是书籍列表
+      bookList: [],
+      // 轮播图列表
+      bannerImgs: []
     }
   },
   methods: {
-
+    async getBookList () {
+      const { data } = await this.$axios.get('http://localhost:8080/getBooks')
+      // console.log(data)
+      this.bookList = data.list
+      // console.log(this.bookList)
+    },
+    async getBannerImgs () {
+      const { data } = await this.$axios.get('http://localhost:8080/getBannerImgs')
+      console.log(data)
+      this.bannerImgs = data.list
+    }
+  },
+  created () {
+    // 获取小说列表
+    this.getBookList()
+    // 获取轮播图列表
+    this.getBannerImgs()
   }
 }
 </script>
