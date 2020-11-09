@@ -17,5 +17,32 @@ export default {
         balance: 145730
       }
     }
+  },
+  'http://localhost:8080/y|get': options => {
+    return {
+      status: 200,
+      msg: '获取成功',
+      data: [
+        {
+          jiage: 6,
+          yuebin: 600
+        }, {
+          jiage: 12,
+          yuebin: 1200
+        }, {
+          jiage: 30,
+          yuebin: 3000
+        }, {
+          jiage: 60,
+          yuebin: 6000
+        }, {
+          jiage: 98,
+          yuebin: 9800
+        }, {
+          jiage: 198,
+          yuebin: 19800
+        }
+      ]
+    }
   }
 }
