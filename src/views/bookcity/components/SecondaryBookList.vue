@@ -2,7 +2,7 @@
   <div class="SecondaryBookList-container">
 
     <!-- 每一项书籍的数据  -->
-    <div class="SecondaryBookList-item" v-for="(value,index) in allbook" :key="index">
+    <div class="SecondaryBookList-item" v-for="(value,index) in allbook" :key="index" @click="$router.push({name:'BookDetails',query:value.id,params:value})">
       <!-- 每一项中左边的盒子  -->
       <div class="SecondaryBookList-item-left">
         <van-image class="SecondaryBookList-image" fit="cover" :src="value.images" />

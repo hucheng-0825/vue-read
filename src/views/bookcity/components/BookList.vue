@@ -9,7 +9,7 @@
   <van-swipe-item><van-image class="main-image"  fit="cover" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=367462202,527001410&fm=26&gp=0.jpg" /></van-swipe-item>
 </van-swipe>
     <!-- 每一项书籍的数据  -->
-    <div class="BookList-item" v-for="(value,index) in list" :key="index">
+    <div class="BookList-item" v-for="(value,index) in list" :key="index" @click="$router.push({name:'BookDetails',params:value,query:value.id})">
       <!-- 每一项中左边的盒子  -->
       <div class="BookList-item-left">
         <van-image class="BookList-image" fit="cover" :src="value.images" />

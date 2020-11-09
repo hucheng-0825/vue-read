@@ -41,6 +41,11 @@ const router = new VueRouter({
       path: '/secondarysort',
       name: 'SecondarySort',
       component: () => import('@/views/bookcity/components/SecondarySort.vue')
+    },
+    {
+      path: '/bookdetails/:id',
+      name: 'BookDetails',
+      component: () => import('@/views/bookcity/BookDetails.vue')
     }
   ]
 })
