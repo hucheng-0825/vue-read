@@ -20,9 +20,11 @@
 
 <script>
 import ScondaryBookList from './SecondaryBookList'
+// import BookList from './BookList'
 export default {
   name: 'SecondarySort',
   components: {
+    // BookList
     ScondaryBookList
   },
   data () {
@@ -30,7 +32,7 @@ export default {
       // tab栏的数据
       tabList: ['东方玄幻', '异世大陆', '王朝争霸', '高武世界'],
       // 所有的书籍
-      allBook: [],
+      // allBook: [],
       // 当前激活的index
       active: 0,
       // 头部名字
@@ -43,6 +45,7 @@ export default {
     if (this.$route.params.title) {
       this.title = this.$route.params.title
       window.sessionStorage.setItem('title', this.title)
+      console.log(82)
     } else {
       if (window.sessionStorage.getItem('title')) {
         this.title = window.sessionStorage.getItem('title')

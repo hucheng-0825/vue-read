@@ -42,6 +42,7 @@ export default {
       // console.log(data)
       this.all = data.list
       this.list = this.getRandom({ arry: data.list, range: 4 })
+      // console.log(this.list)
     },
     getRandom (opt) {
       var o = opt.arry

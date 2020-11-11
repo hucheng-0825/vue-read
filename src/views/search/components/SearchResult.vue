@@ -6,10 +6,13 @@
     finished-text="没有更多了"
     @load="onLoad"
     >
-      <van-cell v-for="item in list" :key="item.id">
+      <van-cell
+      v-for="item in list"
+      :key="item.id"
+      @click="$router.push(`/bookdetails/${item.id}`)">
         <template #title>
-        <div v-html="hightLight(item.name)"></div>
-      </template>
+          <div v-html="hightLight(item.name)"></div>
+        </template>
       </van-cell>
     </van-list>
   </div>
@@ -34,7 +37,7 @@ export default {
   methods: {
     async onLoad () {
       const { data } = await this.$axios.get('http://127.0.0.1:3333/bookselect', { params: { name: this.searchText } })
-      console.log(data)
+      // console.log(data)
       this.list.push(...data)
       this.loading = false
       this.finished = true

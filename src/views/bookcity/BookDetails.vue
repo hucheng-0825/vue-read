@@ -36,11 +36,11 @@ import { removeItem } from '@/public/localStorage.js';
 </div>
 <div class="BookDetails-main-bottom">
 
-  <span class="bottom-span geshi" ref="wanwan">{{chulichange}}
-    <span v-if="isArrowShow">
+  <span class="bottom-span geshi" ref="wanwan">{{value.intro}}
+    <!-- <span v-if="isArrowShow">
       <van-icon class="jiantou" name="arrow-down" v-if="isShow" @click="handleUp" />
   <van-icon   class="jiantou" name="arrow-up" v-else @click="handleLower" />
-    </span>
+    </span> -->
 
   </span>
 
@@ -152,13 +152,13 @@ export default {
     // 子组件传过来的事件和参数
     handleChange (item) {
       this.value = item
-      this.handleIsArrowShow()
+      // this.handleIsArrowShow()
       this.kongzhidianji = !this.kongzhidianji
     },
     handleAllChange (item) {
       location.assign(location.href.slice(0, 36) + item.id)
       this.value = item
-      this.handleIsArrowShow()
+      // this.handleIsArrowShow()
 
       this.dianji = !this.dianji
     }
@@ -197,6 +197,11 @@ export default {
       // console.log(vm.histo)
     })
   }
+  // beforeRouteEnter (to, from, next) {
+  //   next(vm => {
+  //     console.log(to, from)
+  //   })
+  // }
 }
 </script>
 
