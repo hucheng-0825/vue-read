@@ -28,9 +28,7 @@ const router = new VueRouter({
         {
           path: '/my',
           name: 'Myindex',
-          component: () => import('@/views/my/My.vue'),
-          children: [
-          ]
+          component: () => import('@/views/my/My.vue')
         }
       ]
     },

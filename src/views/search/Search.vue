@@ -23,7 +23,12 @@
     <search-suggested v-else-if="searchText" :searchText="searchText" />
     <!-- /联想搜索 -->
     <!-- 搜索历史 -->
-    <search-history v-else-if="isHistory" :history="searchHistoryList" @remove="removeHistory" />
+    <search-history
+    v-else-if="isHistory"
+    :history="searchHistoryList"
+    @remove="removeHistory"
+    @onsearch="onSearch"
+    />
     <!-- /搜索历史 -->
     <!-- 大家都在搜 -->
     <div v-else>
@@ -40,6 +45,7 @@
         text-color="#000"
         v-for="item in recommendList"
         :key="item.id"
+        @click="$router.push(`/bookdetails/${item.id}`)"
       >{{item.name}}</van-tag>
     </div>
     <!-- /大家都在搜 -->
@@ -90,7 +96,7 @@ export default {
       const data = await this.$axios.get('http://localhost:8080/getreCommendBooks|get')
       // console.log(data)
       this.recommendList = data.data.list
-      console.log(this.recommendList)
+      // console.log(this.recommendList)
     }
   },
   components: {

@@ -42,6 +42,7 @@ export default {
       // console.log(data)
       this.all = data.list
       this.list = this.getRandom({ arry: data.list, range: 4 })
+      // console.log(this.list)
     },
     getRandom (opt) {
       var o = opt.arry
@@ -61,7 +62,7 @@ export default {
       return valArray
     },
     handle (value) {
-      // console.log('shuchu')
+      location.assign(location.href.slice(0, 36) + value.id)
       // console.log(this.getRandom({ arry: this.all, range: 4 }))
       this.list = this.getRandom({ arry: this.all, range: 4 })
       this.$emit('close', value)

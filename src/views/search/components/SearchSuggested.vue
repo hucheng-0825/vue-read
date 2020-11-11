@@ -4,6 +4,7 @@
       icon="search"
       v-for="item in bookList"
       :key="item.id"
+      @click="$router.push(`/bookdetails/${item.id}`)"
     >
     <template #title>
         <div v-html="hightLight(item.name)"></div>

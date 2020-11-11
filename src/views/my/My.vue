@@ -52,6 +52,7 @@
         title="设置"
         icon="setting-o"
         is-link
+        to="/setting"
       />
     </div>
 

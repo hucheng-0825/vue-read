@@ -36,11 +36,11 @@ import { removeItem } from '@/public/localStorage.js';
 </div>
 <div class="BookDetails-main-bottom">
 
-  <span class="bottom-span geshi" ref="wanwan">{{chulichange}}
-    <span v-if="isArrowShow">
+  <span class="bottom-span geshi" ref="wanwan">{{value.intro}}
+    <!-- <span v-if="isArrowShow">
       <van-icon class="jiantou" name="arrow-down" v-if="isShow" @click="handleUp" />
   <van-icon   class="jiantou" name="arrow-up" v-else @click="handleLower" />
-    </span>
+    </span> -->
 
   </span>
 
@@ -102,7 +102,7 @@ export default {
   },
   data () {
     return {
-      value: null,
+      value: {},
       // 控制箭头的上下方向,true为下,false为上
       isShow: true,
       isArrowShow: true,
@@ -110,9 +110,6 @@ export default {
       dianji: false,
       kongzhidianji: false
     }
-  },
-  mounted () {
-    this.handleIsArrowShow()
   },
   methods: {
     // 通过书籍ID获取书籍详情
@@ -126,22 +123,6 @@ export default {
     onClickLeft () {
       this.$router.back()
     },
-    handleUp () {
-      this.isShow = false
-      this.$refs.wanwan.classList.remove('geshi')
-    },
-    handleLower () {
-      this.isShow = true
-      this.$refs.wanwan.classList.add('geshi')
-    },
-    // 控制箭头的显示，如果少于三行，则隐藏
-    handleIsArrowShow () {
-      if (this.value.intro.length <= 75) {
-        this.isArrowShow = false
-      } else {
-        this.isArrowShow = true
-      }
-    },
     gundong (value) {
       this.isNum = value.target.scrollTop
       // console.log(value.target.scrollTop)
@@ -149,29 +130,21 @@ export default {
     // 子组件传过来的事件和参数
     handleChange (item) {
       this.value = item
-      this.handleIsArrowShow()
+      // this.handleIsArrowShow()
       this.kongzhidianji = !this.kongzhidianji
     },
     handleAllChange (item) {
       this.value = item
-      this.handleIsArrowShow()
+      // this.handleIsArrowShow()
 
       this.dianji = !this.dianji
     }
-  },
-  computed: {
-    chulichange () {
-      if (this.isShow && this.isArrowShow) {
-        if (this.value.intro.length >= 75) {
-          return this.value.intro.slice(0, 75) + '...'
-        } else {
-          return this.value.intro
-        }
-      } else {
-        return this.value.intro
-      }
-    }
   }
+  // beforeRouteEnter (to, from, next) {
+  //   next(vm => {
+  //     console.log(to, from)
+  //   })
+  // }
 }
 </script>
 

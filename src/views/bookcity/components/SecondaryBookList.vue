@@ -2,7 +2,7 @@
   <div class="SecondaryBookList-container">
 
     <!-- 每一项书籍的数据  -->
-    <div class="SecondaryBookList-item" v-for="(value,index) in allbook" :key="index" @click="$router.push({name:'BookDetails',query:value.id,params:value})">
+    <div class="SecondaryBookList-item" v-for="value in booksList" :key="value.id" @click="$router.push(`/bookdetails/${value.id}`)">
       <!-- 每一项中左边的盒子  -->
       <div class="SecondaryBookList-item-left">
         <van-image class="SecondaryBookList-image" fit="cover" :src="value.images" />
@@ -21,14 +21,21 @@
 <script>
 export default {
   name: 'SecondaryBookList',
-  props: ['allbook'],
   data () {
     return {
-
+      booksList: []
     }
   },
   methods: {
-
+    async getBookList () {
+      const { data } = await this.$axios.get('http://localhost:8080/getBooks')
+      // console.log(data)
+      this.booksList = data.list
+      // console.log(this.booksList)
+    }
+  },
+  created () {
+    this.getBookList()
   }
 }
 </script>

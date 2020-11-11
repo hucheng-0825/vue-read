@@ -16,7 +16,7 @@
   </div>
   <div class="manlist">
     <van-grid :border="false" :column-num="3">
-      <van-grid-item class="vgrid"  :key="index" v-for="(value,index) in booknameone"  :text="value.num" @click="$router.push({name:'SecondarySort',params:value})">
+      <van-grid-item class="vgrid"  :key="index" v-for="(value,index) in booknameone"  :text="value.num" @click="$router.push({name:'SecondarySort'})">
         <template #icon>
               <span class="objectname">{{value.title}}</span>
         </template>
@@ -32,7 +32,7 @@
   </div>
   <div class="manlist">
     <van-grid :border="false" :column-num="3" >
-      <van-grid-item class="vgrid" :key="index" v-for="(value,index) in booknametwo"  :text="value.num" @click="$router.push({name:'SecondarySort',params:value})">
+      <van-grid-item class="vgrid" :key="index" v-for="(value,index) in booknametwo"  :text="value.num" @click="$router.push({name:'SecondarySort'})">
         <template #icon>
               <span class="objectname">{{value.title}}</span>
         </template>

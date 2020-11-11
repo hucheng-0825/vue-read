@@ -11,7 +11,8 @@
 <!-- tab栏区域  -->
 <van-tabs v-model="active" swipeable>
   <van-tab :title="value" v-for="(value,index) in tabList" :key="index">
-<scondary-book-list :allbook="allBook"></scondary-book-list>
+<scondary-book-list></scondary-book-list>
+<!-- <book-list></book-list> -->
   </van-tab>
 
 </van-tabs>
@@ -20,9 +21,11 @@
 
 <script>
 import ScondaryBookList from './SecondaryBookList'
+// import BookList from './BookList'
 export default {
   name: 'SecondarySort',
   components: {
+    // BookList
     ScondaryBookList
   },
   data () {
@@ -30,22 +33,19 @@ export default {
       // tab栏的数据
       tabList: ['东方玄幻', '异世大陆', '王朝争霸', '高武世界'],
       // 所有的书籍
-      allBook: [],
+      // allBook: [],
       // 当前激活的index
       active: 0
     }
   },
   mounted () {
-    this.getAllBook()
   },
   methods: {
-    async getAllBook () {
-      const { data } = await this.$axios.get('http://localhost:8080/getBooks')
-      // console.log(data)
-      var book = data
-      book.reverse()
-      this.allBook = book
-    }
+    // async getAllBook () {
+    //   const { data } = await this.$axios.get('http://localhost:8080/getBooks')
+    //   // console.log(data)
+    //   this.allBook = data.list
+    // }
   }
 
 }
