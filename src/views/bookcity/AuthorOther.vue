@@ -40,8 +40,8 @@ export default {
   methods: {
     async getBooks () {
       const { data } = await this.$axios.get('http://localhost:8080/getBooks')
-      this.all = data
-      this.list = this.getRandom({ arry: data, range: 4 })
+      this.all = data.list
+      this.list = this.getRandom({ arry: data.list, range: 4 })
     },
     getRandom (opt) {
       var o = opt.arry

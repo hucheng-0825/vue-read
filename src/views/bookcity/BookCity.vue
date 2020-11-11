@@ -16,7 +16,7 @@
     <!-- 内容区域  -->
 
     <!-- 导入的组件  -->
-  <book-list :list="bookList"></book-list>
+  <book-list></book-list>
   </van-tab>
 
 </van-tabs>

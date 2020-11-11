@@ -276,16 +276,16 @@ export default {
     }
     @keyframes shaky-slow {
         0% {
-            -webkit-transform:  rotate(20deg);
+            -webkit-transform:  rotate(10deg);
         }
         25% {
-            -webkit-transform:  rotate(-20deg);
+            -webkit-transform:  rotate(-10deg);
         }
         50% {
-            -webkit-transform:  rotate(20deg);
+            -webkit-transform:  rotate(10deg);
         }
         75% {
-            -webkit-transform:  rotate(-20deg);
+            -webkit-transform:  rotate(-10deg);
 
     }
     100% {

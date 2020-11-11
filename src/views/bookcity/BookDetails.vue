@@ -85,16 +85,24 @@ import AuthorOther from './AuthorOther'
 import IntroduceBook from './IntroduceBook'
 export default {
   name: 'BookDetails',
+  props: {
+    id: {
+      type: [Number, String],
+      required: true
+    }
+  },
   components: {
     IntroduceBook,
     AuthorOther
   },
   created () {
-    this.value = this.$route.params
+    // this.push({name:'jsajjaf',query:value})
+    // this.value = this.$route.params
+    this.getBookDetails()
   },
   data () {
     return {
-      value: '',
+      value: null,
       // 控制箭头的上下方向,true为下,false为上
       isShow: true,
       isArrowShow: true,
@@ -107,6 +115,13 @@ export default {
     this.handleIsArrowShow()
   },
   methods: {
+    // 通过书籍ID获取书籍详情
+    async getBookDetails () {
+      const { data } = await this.$axios.get('http://127.0.0.1:3333/booklist', { params: { id: this.id } })
+      // console.log(this.id)
+      this.value = data
+      // console.log(data)
+    },
     //  点击nav左侧的返回箭头
     onClickLeft () {
       this.$router.back()
