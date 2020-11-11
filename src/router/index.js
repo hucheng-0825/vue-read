@@ -53,6 +53,11 @@ const router = new VueRouter({
       path: '/myaccount',
       name: 'MyAccount',
       component: () => import('@/views/my/components/MyAccount.vue')
+    },
+    {
+      path: '/bookdetails/:id',
+      name: 'BookDetails',
+      component: () => import('@/views/bookcity/BookDetails.vue')
     }
   ]
 })

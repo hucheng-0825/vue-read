@@ -22,11 +22,12 @@
 </van-cell>
    <!-- 标签页区域  -->
 <div class="ChannelList-tag">
-  <draggable :disabled="drag" :sort= "true" v-model="upList" chosenClass="chosen" group="name" animation="300" >
+  <draggable :disabled="drag" :sort= "true" v-model="upList" chosenClass="chosen" group="name" animation="300" @start="startEvent"  @end="endEvent">
    <transition-group>
-     <span class="ChannelList-item" :class="index==0?'lived':''" v-for="(element,index) in upList" :key="index">
+     <span class="ChannelList-item " :class="isbtn==true?'shaky':''"   v-for="(element,index) in upList" :key="index" >
        {{element}}<van-icon name="clear" class="item-cha" v-if="index!==0&isbtn==true"  @click="shanchu(element)"/>
        </span>
+       <!-- :class="index==0?'lived':''" -->
     </transition-group>
 </draggable>
 </div>
@@ -73,9 +74,15 @@ export default {
 
     }
   },
-  mounted () {
+  created () {
     // console.log(this.someList)
     // this.upList = this.someList
+
+    // this.upList = this.someList
+    // console.log(this.someList)
+    this.getsomeChannel()
+  },
+  mounted () {
     this.handlediaoyong()
   },
   watch: {
@@ -100,7 +107,6 @@ export default {
     // 处理下面的,让整个数组进行遍历，得到剩下的
 
     handlediaoyong () {
-      this.upList = this.someList
       this.list.forEach(value => {
         if (this.upList.indexOf(value) === -1) {
           this.lowerList.push(value)
@@ -121,6 +127,21 @@ export default {
         return item !== value
       })
       this.lowerList.push(value)
+    },
+    startEvent (value) {
+      // console.log(value.path[0].children)
+      value.path[0].children.forEach(item => {
+        item.classList.remove('shaky')
+      })
+    },
+    endEvent (value) {
+      value.path[0].children.forEach(item => {
+        item.classList.add('shaky')
+      })
+    },
+    async getsomeChannel () {
+      const { data } = await this.$axios.get('http://localhost:8080/somechannels')
+      this.upList = data
     }
 
   }
@@ -167,6 +188,7 @@ export default {
   }
   .ChannelList-tag{
     .ChannelList-item{
+
       position: relative;
       display: inline-block;
       text-align: center;
@@ -189,10 +211,14 @@ export default {
               font-size: 35px;
             }
     }
-    .lived{
+    .ChannelList-item:first-child{
       color: #f85959;
       border: 1px solid #f85959;
     }
+    // .lived{
+    //   color: #f85959;
+    //   border: 1px solid #f85959;
+    // }
     // 被选中的样式
     .chosen {
             border: solid 1px hotpink !important;
@@ -221,5 +247,51 @@ export default {
             }
 
   }
+ // 元素摆动的动画
+ .shaky {
+        // display: inline-block;
+        // padding: 1px;
+        // font-size: 12px;
+        -webkit-transform-origin: center center;
+        -ms-transform-origin: center center;
+        transform-origin: center center;
+        -webkit-animation-name: shaky-slow;
+        -ms-animation-name: shaky-slow;
+        animation-name: shaky-slow;
+        -webkit-animation-duration: 1s;
+        -ms-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-iteration-count:1 ;
+        -ms-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+        -webkit-animation-timing-function: ease-in-out;
+        -ms-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+        -webkit-animation-delay: 0s;
+        -ms-animation-delay: 0s;
+        animation-delay: 0s;
+        -webkit-animation-play-state: running;
+        -ms-animation-play-state: running;
+        animation-play-state: running;
+    }
+    @keyframes shaky-slow {
+        0% {
+            -webkit-transform:  rotate(20deg);
+        }
+        25% {
+            -webkit-transform:  rotate(-20deg);
+        }
+        50% {
+            -webkit-transform:  rotate(20deg);
+        }
+        75% {
+            -webkit-transform:  rotate(-20deg);
+
+    }
+    100% {
+            -webkit-transform:  rotate(0deg);
+
+    }
+}
 }
 </style>
