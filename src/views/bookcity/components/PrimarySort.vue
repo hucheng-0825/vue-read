@@ -68,7 +68,7 @@ export default {
   mounted () {},
   methods: {
     onClickLeft () {
-      this.$router.back()
+      this.$router.push({ path: '/bookcity' })
     },
     onClickRight () {
       this.show = true

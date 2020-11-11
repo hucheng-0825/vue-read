@@ -61,8 +61,8 @@ export default {
       return valArray
     },
     handle (value) {
-      // console.log('shuchu')
-      // console.log(this.getRandom({ arry: this.all, range: 4 }))
+      // location.assign(location.href.slice(0, 36) + value.id)
+
       this.list = this.getRandom({ arry: this.all, range: 4 })
       this.$emit('close', value)
     }

@@ -102,17 +102,18 @@ export default {
   },
   data () {
     return {
-      value: null,
+      value: '',
       // 控制箭头的上下方向,true为下,false为上
       isShow: true,
       isArrowShow: true,
       isNum: '',
       dianji: false,
-      kongzhidianji: false
+      kongzhidianji: false,
+      histo: 999
     }
   },
   mounted () {
-    this.handleIsArrowShow()
+    // this.handleIsArrowShow()
   },
   methods: {
     // 通过书籍ID获取书籍详情
@@ -124,7 +125,9 @@ export default {
     },
     //  点击nav左侧的返回箭头
     onClickLeft () {
-      this.$router.back()
+      // console.log('我要回去')
+      // console.log(this.histo)
+      this.$router.push({ name: window.sessionStorage.getItem('name') })
     },
     handleUp () {
       this.isShow = false
@@ -136,7 +139,7 @@ export default {
     },
     // 控制箭头的显示，如果少于三行，则隐藏
     handleIsArrowShow () {
-      if (this.value.intro.length <= 75) {
+      if (this.value.intro.length < 70) {
         this.isArrowShow = false
       } else {
         this.isArrowShow = true
@@ -153,6 +156,7 @@ export default {
       this.kongzhidianji = !this.kongzhidianji
     },
     handleAllChange (item) {
+      location.assign(location.href.slice(0, 36) + item.id)
       this.value = item
       this.handleIsArrowShow()
 
@@ -161,16 +165,37 @@ export default {
   },
   computed: {
     chulichange () {
-      if (this.isShow && this.isArrowShow) {
-        if (this.value.intro.length >= 75) {
-          return this.value.intro.slice(0, 75) + '...'
-        } else {
-          return this.value.intro
+      if (this.value instanceof Object) {
+        this.handleIsArrowShow()
+        if (this.isShow && this.isArrowShow) {
+          if (this.value.intro.length >= 70) {
+            return this.value.intro.slice(0, 70) + '...'
+          } else {
+            return this.value.intro
+          }
         }
-      } else {
-        return this.value.intro
       }
+      // console.log('我在最后')
+      return this.value.intro
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    // console.log(to)
+    // console.log(from)
+    // console.log(this)
+    next(vm => {
+      // console.log(to)
+      // console.log(from)
+      if (from.name === 'BookCity' || from.name === 'SecondarySort') {
+        // console.log('我的')
+        vm.histo = from.name
+        window.sessionStorage.setItem('name', from.name)
+        // console.log(852)
+      }
+      // console.log(to)
+      // console.log(from)
+      // console.log(vm.histo)
+    })
   }
 }
 </script>
