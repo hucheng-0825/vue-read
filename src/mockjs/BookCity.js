@@ -2210,8 +2210,11 @@ export default {
     })
     return newArr
   },
-  'http://localhost:8080/channels|get': options => {
+  'http://localhost:8080/allchannels|get': options => {
     return ['精选', '男频', '女频', '热读', '新书', '免费', '完本', '折扣', '限时免费', '悬疑灵异', '成功励志', '人文社科', '动漫绘本', '商业财经', '盗墓', '特种兵', '上古洪荒', '软饭流', '花样年华', '影视同期', '职场', '军事']
+  },
+  'http://localhost:8080/userchannels|get': options => {
+    return ['精选', '热读', '新书', '免费', '完本', '悬疑灵异', '成功励志']
   },
   // 'http://localhost:8080/getBooks|get': options => {
   //   const newArr = []
@@ -2226,9 +2229,6 @@ export default {
       list: '@randomBook'
     })
     return newArr
-  },
-  'http://localhost:8080/somechannels|get': options => {
-    return ['精选', '男频', '女频', '热读', '新书', '免费', '完本']
   },
   'http://localhost:8080/getBooks|get': options => {
     const newArr = MockJS.mock({

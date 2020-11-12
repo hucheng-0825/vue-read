@@ -43,7 +43,7 @@
       <draggable
       :disabled="drag"
       :sort= "true"
-      v-model="upList"
+      v-model="myChannel"
       chosenClass="chosen"
       group="name"
       animation="300"
@@ -52,15 +52,16 @@
         <transition-group>
           <span
           class="ChannelList-item"
-          :class="isbtn==true?'shaky':''"
-          v-for="(element,index) in upList"
-          :key="index" >
+          :class="{active:index===active,shaky:isAnimationShow}"
+          v-for="(element,index) in myChannel"
+          :key="index"
+          @click="handle(index)"
+          >
             {{element}}
             <van-icon
             name="clear"
             class="item-cha"
             v-if="index!==0&isbtn==true"
-            @click="shanchu(element)"
             />
           </span>
         </transition-group>
@@ -76,7 +77,7 @@
     <div class="ChannelList-lowTag">
       <span
       class="ChannelList-lowItem"
-      v-for="(value,index) in lowerList"
+      v-for="(value,index) in recommendChannels"
       :key="index"
       @click="handleAdd(value)">
         <div class="value">
@@ -90,9 +91,19 @@
 
 <script>
 import draggable from 'vuedraggable'
+import { setItem } from '@/public/localStorage.js'
 export default {
   name: 'ChannelList',
-  props: ['someList', 'list'],
+  props: {
+    myChannel: {
+      type: Array,
+      required: true
+    },
+    active: {
+      type: Number,
+      required: true
+    }
+  },
   components: {
     draggable
   },
@@ -104,66 +115,61 @@ export default {
 
       // 控制拖拽
       drag: true,
-      // 上面的数组,tag上面的
-      upList: [],
-      // 这是下面的tag数组
-      lowerList: []
-
+      // 所有的频道
+      allChannels: [],
+      isAnimationShow: true
     }
   },
   created () {
     // console.log(this.someList)
-    // this.upList = this.someList
+    // this.allChannels = this.someList
 
-    // this.upList = this.someList
+    // this.allChannels = this.someList
     // console.log(this.someList)
-    this.getsomeChannel()
+    this.getAllChannel()
   },
-  mounted () {
-    this.handlediaoyong()
-  },
-  watch: {
-
+  computed: {
+    recommendChannels () {
+      return this.allChannels.filter(channel => {
+        return !this.myChannel.find(myChannel => {
+          return myChannel === channel
+        })
+      })
+    }
   },
   methods: {
-
+    async getAllChannel () {
+      const { data } = await this.$axios.get('http://localhost:8080/allchannels')
+      this.allChannels = data
+    },
+    handle (index) {
+      if (this.isbtn) {
+        // 为true时，单击删除
+        if (index <= this.active) {
+          this.$emit('update-active', this.active - 1, true)
+        }
+        this.myChannel.splice(index, 1)
+      } else {
+        // 为false时，单击跳转
+        this.$emit('update-active', index, false)
+      }
+      setItem('CHANNELS', this.myChannel)
+    },
+    handleAdd (channel) {
+      this.myChannel.push(channel)
+      setItem('CHANNELS', this.myChannel)
+    },
     // 点击编辑开始拖拽
     handleDragle () {
       this.isbtn = true
       this.drag = false
+      this.isAnimationShow = false
     },
     // 点击完成结束
     handleWancheng () {
       this.isbtn = false
       this.drag = true
-    },
-    // 处理下面的编辑，开始添加
-    handleLower () {
-      this.lowerBtn = true
-    },
-    // 处理下面的,让整个数组进行遍历，得到剩下的
-
-    handlediaoyong () {
-      this.list.forEach(value => {
-        if (this.upList.indexOf(value) === -1) {
-          this.lowerList.push(value)
-          // console.log(852)
-        }
-      })
-    },
-    // 点击下面的加号后，添加进入
-    handleAdd (value) {
-      this.upList.push(value)
-      this.lowerList = this.lowerList.filter(item => {
-        return item !== value
-      })
-    },
-    // 点击X号删除
-    shanchu (value) {
-      this.upList = this.upList.filter(item => {
-        return item !== value
-      })
-      this.lowerList.push(value)
+      this.isAnimationShow = true
     },
     startEvent (value) {
       // console.log(value.path[0].children)
@@ -172,15 +178,11 @@ export default {
       })
     },
     endEvent (value) {
+      console.log(7788120)
       value.path[0].children.forEach(item => {
         item.classList.add('shaky')
       })
-    },
-    async getsomeChannel () {
-      const { data } = await this.$axios.get('http://localhost:8080/somechannels')
-      this.upList = data
     }
-
   }
 }
 </script>
@@ -225,7 +227,6 @@ export default {
   }
   .ChannelList-tag{
     .ChannelList-item{
-
       position: relative;
       display: inline-block;
       text-align: center;
@@ -235,20 +236,18 @@ export default {
       border-radius: 50px;
       margin: 10px 10px;
       color: #3d3828;
-
-            border: solid 1px #dcdcdc;
-
-            cursor: move;
-            // 这个是上面的tag中的X的定位
-            .item-cha{
-              position: absolute;
-              right: 0px;
-              top: 2px;
-              color: #cccccc;
-              font-size: 35px;
-            }
+      border: solid 1px #dcdcdc;
+      cursor: move;
+        // 这个是上面的tag中的X的定位
+        .item-cha{
+          position: absolute;
+          right: 0px;
+          top: 2px;
+          color: #cccccc;
+          font-size: 35px;
+        }
     }
-    .ChannelList-item:first-child{
+    .active {
       color: #f85959;
       border: 1px solid #f85959;
     }
@@ -323,12 +322,10 @@ export default {
         }
         75% {
             -webkit-transform:  rotate(-10deg);
-
-    }
-    100% {
+        }
+        100% {
             -webkit-transform:  rotate(0deg);
-
+        }
     }
-}
 }
 </style>
