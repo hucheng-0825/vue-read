@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <van-icon name="cross" />
+    <van-icon name="cross" @click="$router.back()" />
     <!-- logo登录区 -->
     <div class="logo">
       <van-image class="img" radius="20px" fit="contain" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1253989213,694395908&fm=26&gp=0.jpg" />
@@ -24,13 +24,15 @@
       v-model="password"
       name="密码"
       placeholder="密码"
+      type="password"
+      ref="password"
       :rules="loginFormRules.passwordRules"
       >
         <template #left-icon>
           <i class="iconfont icon-mima"></i>
         </template>
         <template #right-icon>
-          <i class="iconfont icon-yanjing1"></i>
+          <i class="iconfont icon-yanjing1" @click="editTypeAttribute"></i>
         </template>
       </van-field>
       <div class="login-btn">
@@ -81,6 +83,13 @@ export default {
         duration: 20
       })
       this.$router.push('/bookcity')
+    },
+    editTypeAttribute () {
+      if (this.$refs.password.type === 'text') {
+        this.$refs.password.type = 'password'
+      } else {
+        this.$refs.password.type = 'text'
+      }
     }
   }
 }

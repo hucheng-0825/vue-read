@@ -3,51 +3,88 @@
     <!-- 频道列表  -->
     <van-nav-bar
     class="ChannelList-header"
-  title="全部列表"
-
->
- <template #right>
-   <van-icon name="cross" @click="$emit('close',false)" />
- </template>
-</van-nav-bar>
-<van-cell  class="ChannelList-cell" >
-    <template #title>
-      <span v-if="isbtn===false">切换频道</span>
-      <span v-else>拖动排序</span>
-    </template>
-    <template #default>
-      <van-button type="default" round  size="small" class="ChannelList-btn" v-if="isbtn===false" @click="handleDragle">编辑</van-button>
-      <van-button type="default" round  size="small" class="ChannelList-btn" v-else @click="handleWancheng">完成</van-button>
-    </template>
-</van-cell>
+    title="全部列表"
+    >
+      <template #right>
+        <van-icon
+        name="cross"
+        @click="$emit('close',false)"
+        />
+      </template>
+    </van-nav-bar>
+    <van-cell  class="ChannelList-cell" >
+      <template #title>
+        <span v-if="isbtn===false">切换频道</span>
+        <span v-else>拖动排序</span>
+      </template>
+      <template #default>
+        <van-button
+        type="default"
+        round
+        size="small"
+        class="ChannelList-btn"
+        v-if="isbtn===false"
+        @click="handleDragle">
+          编辑
+        </van-button>
+        <van-button
+        type="default"
+        round
+        size="small"
+        class="ChannelList-btn"
+        v-else
+        @click="handleWancheng">
+          完成
+        </van-button>
+      </template>
+    </van-cell>
    <!-- 标签页区域  -->
-<div class="ChannelList-tag">
-  <draggable :disabled="drag" :sort= "true" v-model="upList" chosenClass="chosen" group="name" animation="300" @start="startEvent"  @end="endEvent">
-   <transition-group>
-     <span class="ChannelList-item " :class="isbtn==true?'shaky':''"   v-for="(element,index) in upList" :key="index" >
-       {{element}}<van-icon name="clear" class="item-cha" v-if="index!==0&isbtn==true"  @click="shanchu(element)"/>
-       </span>
-       <!-- :class="index==0?'lived':''" -->
-    </transition-group>
-</draggable>
-</div>
-  <!-- 下面的cell区域  -->
-  <van-cell  class="ChannelList-cell" >
-    <template #title>
-      <span >点击添加更多频道</span>
-
-    </template>
-
-</van-cell>
- <!-- 下面的tag的区域  -->
- <div class="ChannelList-lowTag">
-   <span class="ChannelList-lowItem" v-for="(value,index) in lowerList" :key="index" @click="handleAdd(value)">
-     <div class="value"><van-icon name="plus" class="jiahao" />
-
-  <span>{{value}}</span></div>
-
-     </span>
- </div>
+    <div class="ChannelList-tag">
+      <draggable
+      :disabled="drag"
+      :sort= "true"
+      v-model="upList"
+      chosenClass="chosen"
+      group="name"
+      animation="300"
+      @start="startEvent"
+      @end="endEvent">
+        <transition-group>
+          <span
+          class="ChannelList-item"
+          :class="isbtn==true?'shaky':''"
+          v-for="(element,index) in upList"
+          :key="index" >
+            {{element}}
+            <van-icon
+            name="clear"
+            class="item-cha"
+            v-if="index!==0&isbtn==true"
+            @click="shanchu(element)"
+            />
+          </span>
+        </transition-group>
+      </draggable>
+    </div>
+    <!-- 下面的cell区域  -->
+    <van-cell  class="ChannelList-cell" >
+      <template #title>
+        <span >点击添加更多频道</span>
+      </template>
+    </van-cell>
+    <!-- 下面的tag的区域  -->
+    <div class="ChannelList-lowTag">
+      <span
+      class="ChannelList-lowItem"
+      v-for="(value,index) in lowerList"
+      :key="index"
+      @click="handleAdd(value)">
+        <div class="value">
+          <van-icon name="plus" class="jiahao" />
+          <span>{{value}}</span>
+        </div>
+      </span>
+    </div>
   </div>
 </template>
 
