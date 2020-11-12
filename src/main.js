@@ -12,13 +12,15 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 // 设置rem基准值
 import 'amfe-flexible'
-import axios from 'axios'
+// import axios from 'axios'
 import './mockjs/index'
+//
+import '@/assets/css/icon-font.css'
 Vue.prototype.$axios = axios
 // 全局挂载Vant
 Vue.use(Vant)
 Vue.config.productionTip = false
-Vue.prototype.$axios = axios
+// Vue.prototype.$axios = axios
 
 new Vue({
   router,
