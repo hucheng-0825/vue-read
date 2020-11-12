@@ -36,11 +36,11 @@ import { removeItem } from '@/public/localStorage.js';
 </div>
 <div class="BookDetails-main-bottom">
 
-  <span class="bottom-span geshi" ref="wanwan">{{value.intro}}
-    <!-- <span v-if="isArrowShow">
+  <span class="bottom-span geshi" ref="wanwan">{{chulichange}}
+    <span v-if="isArrowShow">
       <van-icon class="jiantou" name="arrow-down" v-if="isShow" @click="handleUp" />
   <van-icon   class="jiantou" name="arrow-up" v-else @click="handleLower" />
-    </span> -->
+    </span>
 
   </span>
 
@@ -81,6 +81,7 @@ import { removeItem } from '@/public/localStorage.js';
 </template>
 
 <script>
+
 import AuthorOther from './AuthorOther'
 import IntroduceBook from './IntroduceBook'
 export default {
@@ -139,9 +140,12 @@ export default {
     },
     // 控制箭头的显示，如果少于三行，则隐藏
     handleIsArrowShow () {
+      // console.log('调用')
       if (this.value.intro.length < 70) {
         this.isArrowShow = false
+        // console.log('jinlai')
       } else {
+        // console.log(852)
         this.isArrowShow = true
       }
     },

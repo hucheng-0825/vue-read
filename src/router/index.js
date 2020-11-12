@@ -37,6 +37,20 @@ const router = new VueRouter({
       name: 'SearchIndex',
       component: () => import('@/views/search/Search.vue')
     },
+    // 文章阅读路由
+    {
+      path: '/bookread',
+      name: 'bookreadIndex',
+      component: () => import('@/views/bookrack/components/BookRead'),
+      props: true
+    },
+    // 批量购买章节路由
+    {
+      path: '/bookbulkpurchase/:bookId',
+      name: 'bookbulkpurchase',
+      component: () => import('@/views/bookrack/components/BookBulkPurchase'),
+      props: true
+    },
     {
       path: '/primarysort',
       name: 'PrimarySort',
