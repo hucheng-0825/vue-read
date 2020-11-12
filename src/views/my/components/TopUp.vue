@@ -6,10 +6,7 @@
 
     <!-- banner图 -->
     <div class="banner">
-      <img
-        src="@/assets/2.jpg"
-        alt=""
-      >
+      <img src="@/assets/2.jpg" alt="" />
     </div>
     <!-- banner图 -->
 
@@ -18,16 +15,15 @@
     </div>
 
     <!-- 宫格 -->
-    <van-grid
-      :column-num="2"
-      :gutter="20"
-    >
-      <van-grid-item
-        v-for="(item,index) in jiage"
-        :key="index"
-      >
-        <div class="jiage"><span class="shuzhi">{{item.jiage}}</span><span class="wenzi">元</span></div>
-        <span class="yuebin">{{item.yuebin}}阅饼</span>
+    <van-grid :column-num="2" :gutter="20">
+      <van-grid-item v-for="(item, index) in jiage" :key="index">
+        <div class="jiage">
+          <span class="shuzhi">{{ item.jiage }}</span
+          ><span class="wenzi">元</span>
+        </div>
+        <span class="yuebin" @click="Recharge(item.yuebin)"
+          >{{ item.yuebin }}阅饼</span
+        >
       </van-grid-item>
     </van-grid>
     <!-- 宫格 -->
@@ -36,22 +32,12 @@
     <div class="zhifufangshi">选择支付方式</div>
     <van-radio-group v-model="radio">
       <van-cell-group>
-        <van-cell
-          title="微信"
-          clickable
-          @click="radio = '1'"
-          icon="wechat"
-        >
+        <van-cell title="微信" clickable @click="radio = '1'" icon="wechat">
           <template #right-icon>
             <van-radio name="1" />
           </template>
         </van-cell>
-        <van-cell
-          title="支付宝"
-          clickable
-          @click="radio = '2'"
-          icon="alipay"
-        >
+        <van-cell title="支付宝" clickable @click="radio = '2'" icon="alipay">
           <template #right-icon>
             <van-radio name="2" />
           </template>
@@ -64,10 +50,7 @@
 
     <!-- 扫码支付 -->
     <van-popup v-model="payshow">
-      <img
-        src="@/assets/erweima.png"
-        alt=""
-      >
+      <img src="@/assets/erweima.png" alt="" />
     </van-popup>
   </div>
 </template>
@@ -81,7 +64,8 @@ export default {
       // 支付方式选择状态
       radio: 0,
       // 付款弹出层
-      payshow: false
+      payshow: false,
+      money: null
     }
   },
   created () {
@@ -97,9 +81,16 @@ export default {
     },
     // 判断选择的支付方式弹出付款窗口
     fukuanlianjie () {
+      if (this.money) {
+        this.$store.commit('setBookCurrency', this.money)
+      }
       if (this.radio === '1') {
         this.payshow = true
       }
+    },
+    Recharge (v) {
+      console.log(v)
+      this.money = v
     }
   }
 }

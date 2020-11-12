@@ -1,3 +1,4 @@
+import { mapState } from 'vuex';
 <template>
   <div class="my-account">
     <!-- 导航栏区域 -->
@@ -7,7 +8,7 @@
     <!-- 账户余额区域 -->
     <div class="account-balance">
       <div class="balance">
-        <span>{{balance}}</span>
+        <span>{{ BookCurrency || 0 }}</span>
         <span>春卷</span>
       </div>
     </div>
@@ -16,10 +17,10 @@
     <!-- 个性功能区域 -->
     <div class="personal-function"></div>
     <!-- 个性功能区域 -->
-
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'MyAccount',
   data () {
@@ -29,6 +30,9 @@ export default {
   },
   created () {
     this.getbalance()
+  },
+  computed: {
+    ...mapState(['BookCurrency'])
   },
   methods: {
     async getbalance () {
