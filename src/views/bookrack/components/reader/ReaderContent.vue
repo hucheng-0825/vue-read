@@ -1,11 +1,18 @@
 <template>
-  <div @click="handle" class="reader-content-box" ref="readerview">
-    <h3 class="reader-title">
+  <div
+    @click="handle"
+    class="reader-content-box"
+    :class="night ? 'night' : ''"
+    ref="readerview"
+  >
+    <h3 class="reader-title" :style="{ fontSize: Size + 'px' }">
       {{ content ? content.title : bookContent.title }}
     </h3>
-    <p class="reader-content">
-      {{ content ? content.content : bookContent.content }}
-    </p>
+    <p
+      class="reader-content"
+      :style="{ fontSize: Size - 15 + 'px' }"
+      v-html="content ? content.content : bookContent.content"
+    ></p>
     <van-button type="default" color="#ccc" @click.stop="NextChapter"
       >下一章</van-button
     >
@@ -28,7 +35,7 @@ export default {
     console.log(this.bookContent)
   },
   computed: {
-    ...mapState(['list', 'bookContent'])
+    ...mapState(['list', 'bookContent', 'night', 'Size'])
   },
   methods: {
     async NextChapter (item) {
@@ -59,6 +66,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.night {
+  background-color: #555;
+  color: #fff;
+}
 .reader-content-box {
   position: fixed;
   left: 0;
