@@ -71,6 +71,11 @@ const router = new VueRouter({
       name: 'BookDetails',
       props: true,
       component: () => import('@/views/bookcity/BookDetails.vue')
+    },
+    {
+      path: '/setting',
+      name: 'SettingIndex',
+      component: () => import('@/views/my/components/Setting.vue')
     }
   ]
 })

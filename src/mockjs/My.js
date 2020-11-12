@@ -1,4 +1,5 @@
 export default {
+  // 用户头像昵称
   'http://localhost:8080/t|get': options => {
     return {
       status: 200,
@@ -9,6 +10,7 @@ export default {
       }
     }
   },
+  // 我的账户余额
   'http://localhost:8080/q|get': options => {
     return {
       status: 200,
@@ -18,6 +20,7 @@ export default {
       }
     }
   },
+  // 点击充值价格列表
   'http://localhost:8080/y|get': options => {
     return {
       status: 200,

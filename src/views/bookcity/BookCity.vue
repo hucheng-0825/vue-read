@@ -2,36 +2,65 @@
   <div class="BookCity-container">
     <!-- 头部的搜索区域  -->
     <div class="header">
-      <van-button class="header-button-left" type="default" size="large" plain hairline icon-position="right" icon="search" @click="$router.push('/search')"></van-button>
-      <van-button type="default" class="header-button-right" @click="$router.push('/primarysort')">分类</van-button>
+      <van-button
+      class="header-button-left"
+      type="default" size="large"
+      plain
+      hairline
+      icon-position="right"
+      icon="search"
+      @click="$router.push('/search')"/>
+      <van-button
+      type="default"
+      class="header-button-right"
+      @click="$router.push('/primarysort')">
+        分类
+      </van-button>
     </div>
     <div class="main">
-<van-tabs v-model="active" class="main-tabs"    swipeable  @click="change">
- <!-- 这是向下的箭头  -->
-<div class="lower-arrow" slot="nav-right"  @click="chuli">
-    <van-icon name="arrow-down" />
-  </div>
+      <van-tabs
+      v-model="active"
+      class="main-tabs"
+      swipeable
+      @click="change">
+        <!-- 这是向下的箭头  -->
+        <div
+        class="lower-arrow"
+        slot="nav-right"
+        @click="isShow=true">
+          <van-icon name="arrow-down" />
+        </div>
 
-  <van-tab class="main-tab" :title="value" v-for="(value,index) in list" :key="index">
-    <!-- 内容区域  -->
-
-    <!-- 导入的组件  -->
-  <book-list></book-list>
-  </van-tab>
-
-</van-tabs>
+        <van-tab
+        class="main-tab"
+        :title="value"
+        v-for="(value,index) in channels"
+        :key="index">
+        <!-- 内容区域  -->
+        <!-- 导入的组件  -->
+          <book-list></book-list>
+        </van-tab>
+      </van-tabs>
     </div>
-
-<van-popup v-model="isShow" position="bottom" :style="{ height: '100%' }" >
-  <channel-list @close="isShow=$event"  :list="list" :someList="someList"></channel-list>
-</van-popup>
+    <van-popup
+    v-model="isShow"
+    position="bottom"
+    :style="{ height: '100%' }"
+    >
+      <channel-list
+      :myChannel="channels"
+      :active="active"
+      @update-active="onActive"
+      @close="isShow=$event"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import BookList from './components/BookList'
 import ChannelList from './components/ChannelList'
-
+import { getItem } from '@/public/localStorage.js'
 export default {
   name: 'BookCity',
   components: {
@@ -40,46 +69,38 @@ export default {
   },
   data () {
     return {
-      active: '',
+      active: 0,
       // tab列表中的,这个是tab的channels列表
-      list: [],
+      channels: [],
       // 这个是书籍列表
       bookList: [],
       // 展示弹出层
       isShow: false,
-      // 上面的一些
-      someList: [],
       // 这是所有的书籍
       all: []
     }
   },
   created () {
-    this.getList()
+    this.getChannelsList()
     this.getBookList()
-    this.getsomeChannel()
   },
   methods: {
-    async getList () {
-      const { data } = await this.$axios.get('http://localhost:8080/channels')
-      // console.log(data)
-
-      this.list = data
+    async getChannelsList () {
+      const localChannelsList = getItem('CHANNELS')
+      let channel = []
+      if (localChannelsList) {
+        channel = localChannelsList
+      } else {
+        const { data } = await this.$axios.get('http://localhost:8080/userchannels')
+        channel = data
+      }
+      this.channels = channel
     },
     async getBookList () {
       const { data } = await this.$axios.get('http://localhost:8080/getBooks')
       // console.log(data)
       this.bookList = data
       this.all = data
-    },
-    async getsomeChannel () {
-      const { data } = await this.$axios.get('http://localhost:8080/somechannels')
-      this.someList = data
-    },
-    // 打开弹出层的时候触发
-
-    chuli () {
-      this.isShow = true
-      this.getsomeChannel()
     },
     // 这是随机返回的函数
     getRandom (opt) {
@@ -104,6 +125,10 @@ export default {
       // console.log('输出')
       // console.log(this.getRandom({ arry: this.all, range: 50 }))
       this.bookList = this.getRandom({ arry: this.all, range: 50 })
+    },
+    onActive (index, isShow = true) {
+      this.active = index
+      this.isShow = isShow
     }
   }
 }
