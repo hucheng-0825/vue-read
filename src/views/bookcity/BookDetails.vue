@@ -36,11 +36,11 @@ import { removeItem } from '@/public/localStorage.js';
 </div>
 <div class="BookDetails-main-bottom">
 
-  <span class="bottom-span geshi" ref="wanwan">{{value.intro}}
-    <!-- <span v-if="isArrowShow">
+  <span class="bottom-span geshi" ref="wanwan">{{chulichange}}
+    <span v-if="isArrowShow">
       <van-icon class="jiantou" name="arrow-down" v-if="isShow" @click="handleUp" />
   <van-icon   class="jiantou" name="arrow-up" v-else @click="handleLower" />
-    </span> -->
+    </span>
 
   </span>
 
@@ -81,6 +81,7 @@ import { removeItem } from '@/public/localStorage.js';
 </template>
 
 <script>
+
 import AuthorOther from './AuthorOther'
 import IntroduceBook from './IntroduceBook'
 export default {
@@ -102,14 +103,18 @@ export default {
   },
   data () {
     return {
-      value: {},
+      value: '',
       // 控制箭头的上下方向,true为下,false为上
       isShow: true,
       isArrowShow: true,
       isNum: '',
       dianji: false,
-      kongzhidianji: false
+      kongzhidianji: false,
+      histo: 999
     }
+  },
+  mounted () {
+    // this.handleIsArrowShow()
   },
   methods: {
     // 通过书籍ID获取书籍详情
@@ -121,7 +126,28 @@ export default {
     },
     //  点击nav左侧的返回箭头
     onClickLeft () {
-      this.$router.back()
+      // console.log('我要回去')
+      // console.log(this.histo)
+      this.$router.push({ name: window.sessionStorage.getItem('name') })
+    },
+    handleUp () {
+      this.isShow = false
+      this.$refs.wanwan.classList.remove('geshi')
+    },
+    handleLower () {
+      this.isShow = true
+      this.$refs.wanwan.classList.add('geshi')
+    },
+    // 控制箭头的显示，如果少于三行，则隐藏
+    handleIsArrowShow () {
+      // console.log('调用')
+      if (this.value.intro.length < 70) {
+        this.isArrowShow = false
+        // console.log('jinlai')
+      } else {
+        // console.log(852)
+        this.isArrowShow = true
+      }
     },
     gundong (value) {
       this.isNum = value.target.scrollTop
@@ -134,11 +160,46 @@ export default {
       this.kongzhidianji = !this.kongzhidianji
     },
     handleAllChange (item) {
+      location.assign(location.href.slice(0, 36) + item.id)
       this.value = item
       // this.handleIsArrowShow()
 
       this.dianji = !this.dianji
     }
+  },
+  computed: {
+    chulichange () {
+      if (this.value instanceof Object) {
+        this.handleIsArrowShow()
+        if (this.isShow && this.isArrowShow) {
+          if (this.value.intro.length >= 70) {
+            return this.value.intro.slice(0, 70) + '...'
+          } else {
+            return this.value.intro
+          }
+        }
+      }
+      // console.log('我在最后')
+      return this.value.intro
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    // console.log(to)
+    // console.log(from)
+    // console.log(this)
+    next(vm => {
+      // console.log(to)
+      // console.log(from)
+      if (from.name === 'BookCity' || from.name === 'SecondarySort') {
+        // console.log('我的')
+        vm.histo = from.name
+        window.sessionStorage.setItem('name', from.name)
+        // console.log(852)
+      }
+      // console.log(to)
+      // console.log(from)
+      // console.log(vm.histo)
+    })
   }
   // beforeRouteEnter (to, from, next) {
   //   next(vm => {

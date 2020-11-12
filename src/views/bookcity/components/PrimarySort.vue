@@ -16,7 +16,7 @@
   </div>
   <div class="manlist">
     <van-grid :border="false" :column-num="3">
-      <van-grid-item class="vgrid"  :key="index" v-for="(value,index) in booknameone"  :text="value.num" @click="$router.push({name:'SecondarySort'})">
+      <van-grid-item class="vgrid"  :key="index" v-for="(value,index) in booknameone"  :text="value.num" @click="$router.push({name:'SecondarySort',params:value})">
         <template #icon>
               <span class="objectname">{{value.title}}</span>
         </template>
@@ -32,7 +32,7 @@
   </div>
   <div class="manlist">
     <van-grid :border="false" :column-num="3" >
-      <van-grid-item class="vgrid" :key="index" v-for="(value,index) in booknametwo"  :text="value.num" @click="$router.push({name:'SecondarySort'})">
+      <van-grid-item class="vgrid" :key="index" v-for="(value,index) in booknametwo"  :text="value.num" @click="$router.push({name:'SecondarySort',params:value})">
         <template #icon>
               <span class="objectname">{{value.title}}</span>
         </template>
@@ -68,7 +68,7 @@ export default {
   mounted () {},
   methods: {
     onClickLeft () {
-      this.$router.back()
+      this.$router.push({ path: '/bookcity' })
     },
     onClickRight () {
       this.show = true
