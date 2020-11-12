@@ -1,68 +1,55 @@
 <template>
-  <div class="bookrack-container">
+  <div class="bookrack-container" @click="ellipsis = false">
     <div class="title-item">
       <div class="cell-item">
         <span class="s1">春暖阅读</span>
         <span class="s2">面朝大海，春暖花开</span>
       </div>
       <div class="icon-item">
-        <van-icon name="ellipsis" />
+        <van-icon name="ellipsis" @click.stop="ellipsis = !ellipsis" />
+      </div>
+      <!--  -->
+      <div class="serch-item" v-if="ellipsis">
+        <div class="search-item1" @click="$router.push('/search')">
+          <van-icon name="search" /><span>搜索</span>
+        </div>
+        <div class="search-item2" @click="bookshelves">
+          <van-icon name="label-o" /><span>整理书架</span>
+        </div>
       </div>
     </div>
     <!-- 书籍列表区域 -->
-    <top-book :topBook="list" />
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      @load="onLoad"
-      class="van-list-item"
-    >
-      <book-list v-for="v in list" :key="v.id" :list="v" />
-    </van-list>
+    <top-book :topBook="booklocalStorage" />
+    <div class="van-list-item">
+      <book-list v-for="v in booklocalStorage" :key="v.id" :list="v" />
+    </div>
   </div>
 </template>
 
 <script>
 import BookList from './components/BookList'
 import TopBook from './components/TopBook'
+import { mapState } from 'vuex'
 export default {
   name: 'BookRack',
   data () {
     return {
-      list: [],
-      loading: false,
-      finished: false
+      ellipsis: false
     }
+  },
+  computed: {
+    ...mapState(['booklocalStorage'])
   },
   components: {
     BookList,
     TopBook
   },
   created () {
-    this.onLoad()
   },
   methods: {
-    async getBookList (id) {
-      const { data } = await this.$axios.get('http://127.0.0.1:3333/booklist/', {
-        params: { id }
-      })
-      // console.log(data)
-      this.list.push(data)
-    },
-    onLoad () {
-      // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+    // 整理书架
+    bookshelves () {
 
-      for (let i = 1; i < 10; i++) {
-        this.getBookList(i)
-      }
-
-      // 加载状态结束
-      this.loading = false
-
-      // 数据全部加载完成
-
-      this.finished = true
     }
   }
 }
@@ -100,6 +87,38 @@ export default {
       font-size: 55px;
       padding-top: 15px;
     }
+    .serch-item {
+      position: fixed;
+      right: 30px;
+      top: 95px;
+      width: 230px;
+      height: 160px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      z-index: 3333;
+      font-size: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 80px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      .search-item1 {
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+      }
+      .search-item2 {
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+      }
+      span {
+        margin-left: 10px;
+        font-size: 28px;
+      }
+    }
   }
 
   .van-cell__value {
@@ -110,6 +129,8 @@ export default {
     }
   }
   .van-list-item {
+    height: 53vh;
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;

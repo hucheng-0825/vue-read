@@ -1,3 +1,4 @@
+import { mapState } from 'vuex';
 <template>
   <div class="list-container">
     <van-image
@@ -26,8 +27,7 @@ export default {
   },
   methods: {
     bookRead (list) {
-      this.$router.push('/bookread')
-      this.$store.commit('setList', list)
+      this.$router.push('/bookdetails/' + list.id)
     }
   }
 }

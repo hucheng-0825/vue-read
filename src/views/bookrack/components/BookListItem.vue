@@ -3,9 +3,10 @@
     <!-- <van-nav-bar title="目录" /> -->
     <div class="catalog-item">
       <van-cell
-        v-for="v in title"
+        v-for="(v, i) in title"
         :key="v.id"
         :class="v.err === 0 ? 'cell-suo' : ''"
+        @click="pushContent(v, i)"
       >
         <template #title>
           <span>{{ v.title }}</span>
@@ -53,6 +54,12 @@ export default {
     // 返回功能
     onClickLeft () {
       // this.$router.back()
+    },
+    pushContent (v, i) {
+      console.log(v)
+      console.log(i)
+      this.$store.commit('setBookContent', v)
+      this.$emit('closeCatalog')
     }
   }
 }
@@ -64,6 +71,7 @@ export default {
     position: fixed;
     left: 0;
     top: 0;
+    right: 0;
     bottom: 50px;
     overflow-y: auto;
     .cell-suo {
