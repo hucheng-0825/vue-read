@@ -33,6 +33,7 @@ export default {
   name: 'PurchaseRecords',
   data () {
     return {
+      active: 2
     }
   },
   created () {
