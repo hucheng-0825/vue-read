@@ -15,7 +15,7 @@
         title="我的账户"
         icon="gold-coin-o"
         is-link
-        to="/myaccount"
+        @click="showMyAccount"
       >
       </van-cell>
       <van-button
@@ -27,26 +27,31 @@
         title="我的阅历"
         is-link
         icon="clock-o"
+        @click="showExperience"
       />
       <van-cell
         title="充值记录"
         is-link
         icon="cash-back-record"
+        @click="showRechargeRecord"
       />
       <van-cell
         title="购买记录"
         is-link
         icon="cart-circle-o"
+        @click="showPurchaseRecords"
       />
       <van-cell
         title="浏览历史"
         icon="underway-o"
         is-link
+        @click="showBrowsingHistory"
       />
       <van-cell
         title="我的阅读基因"
         icon="browsing-history-o"
         is-link
+        @click="showMyReadingGenes"
       />
       <van-cell
         title="设置"
@@ -56,101 +61,192 @@
       />
     </div>
 
-    <!-- 弹出层 -->
+    <!-- 我的账户弹出层 -->
     <van-popup
-      v-model="show"
       :overlay=overlay
       closeable
+      position="right"
+      close-icon="arrow-left"
+      close-icon-position="top-left"
+      :style="{width:'100%', height: '100%' }"
+      v-model="myAccountShow"
+    >
+      <!-- 我的账户组件 -->
+      <my-account></my-account>
+      <!--我的账户组件-->
+    </van-popup>
+    <!-- 我的账户弹出层 -->
+
+    <!-- 点击充值弹出层 -->
+    <van-popup
+      v-model="show"
+      closeable
+      :overlay=overlay
       close-icon="arrow-left"
       close-icon-position="top-left"
       position="right"
       :style="{width:'100%', height: '100%' }"
     >
-      <!-- 导航栏 -->
-      <van-nav-bar
-        title="充值"
-        :placeholder=placeholder
-      />
-      <!-- 导航栏 -->
-
-      <!-- banner图 -->
-      <div class="banner">
-        <img
-          src="../../assets/2.jpg"
-          alt=""
-        >
-      </div>
-      <!-- banner图 -->
-
-      <div class="amount">
-        <span>充值金额 </span><span> (说明:充值1元=100阅饼)</span>
-      </div>
-
-      <!-- 宫格 -->
-      <van-grid
-        :column-num="2"
-        :gutter="20"
-      >
-        <van-grid-item
-          v-for="(item,index) in jiage"
-          :key="index"
-          :class="appearance"
-          @click="addbgc"
-        >
-          <div class="jiage"><span class="shuzhi">{{item.jiage}}</span><span class="wenzi">元</span></div>
-          <span class="yuebin">{{item.yuebin}}阅饼</span>
-        </van-grid-item>
-      </van-grid>
-      <!-- 宫格 -->
+      <!-- 点击充值组件 -->
+      <top-up></top-up>
+      <!-- 点击充值组件 -->
     </van-popup>
-    <!-- 弹出层 -->
+    <!-- 点击充值弹出层 -->
+
+    <!-- 我的阅历弹出层 -->
+    <van-popup
+      :overlay=overlay
+      closeable
+      position="right"
+      close-icon="arrow-left"
+      close-icon-position="top-left"
+      :style="{width:'100%', height: '100%' }"
+      v-model="experienceShow"
+    >
+      <my-experience></my-experience>
+    </van-popup>
+    <!-- 我的阅历弹出层 -->
+
+    <!-- 充值记录弹出层 -->
+    <van-popup
+      :overlay=overlay
+      closeable
+      position="right"
+      close-icon="arrow-left"
+      close-icon-position="top-left"
+      :style="{width:'100%', height: '100%' }"
+      v-model="rechargeRecordShow"
+    >
+      <recharge-record></recharge-record>
+    </van-popup>
+    <!-- 充值记录弹出层 -->
+
+    <!-- 购买记录弹出层 -->
+    <van-popup
+      :overlay=overlay
+      closeable
+      position="right"
+      close-icon="arrow-left"
+      close-icon-position="top-left"
+      :style="{width:'100%', height: '100%' }"
+      v-model="purchaseRecordsdShow"
+    >
+      <purchase-records></purchase-records>
+    </van-popup>
+    <!-- 购买记录弹出层 -->
+
+    <!-- 浏览历史弹出层 -->
+    <van-popup
+      :overlay=overlay
+      closeable
+      position="right"
+      close-icon="arrow-left"
+      close-icon-position="top-left"
+      :style="{width:'100%', height: '100%' }"
+      v-model="browsingHistoryShow"
+    >
+      <browsing-history></browsing-history>
+    </van-popup>
+    <!-- 浏览历史弹出层 -->
+
+    <!-- 阅读基因弹出层 -->
+    <van-popup
+      :overlay=overlay
+      closeable
+      position="right"
+      close-icon="arrow-left"
+      close-icon-position="top-left"
+      :style="{width:'100%', height: '100%m' }"
+      v-model="myReadingGenesShow"
+    >
+      <my-reading-genes></my-reading-genes>
+    </van-popup>
+    <!-- 阅读基因弹出层 -->
   </div>
 
 </template>
 
-<script>
+<script>// 导入我的账户组件
+import MyAccount from './components/MyAccount'
+import TopUp from './components/TopUp'
+import MyExperience from './components/MyExperience'
+import RechargeRecord from './components/RechargeRecord'
+import PurchaseRecords from './components/PurchaseRecords'
+import BrowsingHistory from './components/BrowsingHistory'
+import MyReadingGenes from './components/MyReadingGenes'
 export default {
   name: 'Myindex',
+  components: {
+    MyAccount,
+    TopUp,
+    MyExperience,
+    RechargeRecord,
+    PurchaseRecords,
+    BrowsingHistory,
+    MyReadingGenes
+  },
   data () {
     return {
+      // 用户信息列表
       list: {
       },
-      // 是否显示弹出层
+      // 我的账户弹出层
+      myAccountShow: false,
+      // 点击充值弹出层
       show: false,
+      // 我的阅历弹出层
+      experienceShow: false,
+      // 充值记录弹出层
+      rechargeRecordShow: false,
+      // 购买记录弹出层
+      purchaseRecordsdShow: false,
+      // 浏览历史弹出层
+      browsingHistoryShow: false,
+      // 阅读基因
+      myReadingGenesShow: false,
       // 是否显示遮罩层
-      overlay: false,
-      placeholder: true,
-      appearance: false,
-      jiage: []
+      overlay: false
+      // 账户余额
     }
   },
   created () {
     this.getusername()
-    this.getbalance()
   },
   methods: {
+    showMyAccount () {
+      this.myAccountShow = true
+    },
     goCZ () {
-      // console.log(111)
       this.show = true
     },
-    onClickLeft () {
-      this.$router.back(-1)
-    },
+    // 获取用户信息
     async getusername () {
       const { data } = await this.$axios.get('http://localhost:8080/t')
       // console.log(data)
       this.list = data.data
       // console.log(this.list)
     },
-    async getbalance () {
-      const { data } = await this.$axios.get('http://localhost:8080/y')
-      // console.log(data)
-      this.jiage = data.data
-      // console.log(this.jiage)
+    // 点击显示我的阅历
+    showExperience () {
+      this.experienceShow = true
     },
-    addbgc () {
-      this.appearance = true
+    // 点击显示充值记录
+    showRechargeRecord () {
+      this.rechargeRecordShow = true
+    },
+    // 点击显示购买记录
+    showPurchaseRecords () {
+      this.purchaseRecordsdShow = true
+    },
+    // 点击显示浏览历史
+    showBrowsingHistory () {
+      this.browsingHistoryShow = true
+    },
+    // 点击显示阅读基因
+    showMyReadingGenes () {
+      this.myReadingGenesShow = true
     }
+
   }
 }
 </script>
@@ -185,67 +281,6 @@ export default {
       width: 140px;
       height: 52px;
       font-size: 12px;
-    }
-  }
-  ::v-deep.van-popup {
-    .van-nav-bar {
-      position: fixed;
-      width: 100%;
-      // background-color: pink;
-      .van-nav-bar__title {
-        margin: 0;
-        margin-left: 120px;
-        margin-top: 10px;
-      }
-    }
-    .banner {
-      width: 750px;
-      height: 312px;
-      margin-top: 92px;
-      img {
-        width: 750px;
-        height: auto;
-      }
-    }
-    .amount {
-      display: flex;
-      // justify-content: center; /* 水平居中 */
-      align-items: center; /* 垂直居中 */
-      // background-color: pink;
-      height: 8%;
-      :first-child {
-        margin-left: 50px;
-        font-size: 34px;
-        color: #222222;
-        font-weight: 700;
-        white-space: pre;
-      }
-      :last-child {
-        font-size: 28px;
-        color: #6e6e6e;
-        white-space: pre;
-      }
-    }
-    .van-grid {
-      .appearance {
-          border: 5px solid #c06560;
-          background-color: #faeaea;
-      }
-      .van-grid-item__content {
-        border-radius: 12px;
-        border: 2px solid #e9e9e9;
-        .yuebin {
-          font-size: 28px;
-          color: #6e6e6e;
-        }
-        .shuzhi {
-          font-size: 34px;
-          font-weight: 700;
-        }
-        .wenzi {
-          font-size: 28px;
-        }
-      }
     }
   }
 }

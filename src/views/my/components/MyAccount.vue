@@ -1,12 +1,7 @@
 <template>
   <div class="my-account">
-
     <!-- 导航栏区域 -->
-    <van-nav-bar
-      title="我的账户"
-      left-arrow
-      @click-left="onClickLeft"
-    />
+    <van-nav-bar title="我的账户" />
     <!-- 导航栏区域 -->
 
     <!-- 账户余额区域 -->
@@ -36,9 +31,6 @@ export default {
     this.getbalance()
   },
   methods: {
-    onClickLeft () {
-      this.$router.back(-1)
-    },
     async getbalance () {
       const { data } = await this.$axios.get('http://localhost:8080/q')
       // console.log(data)
@@ -50,14 +42,15 @@ export default {
 <style lang="scss" scoped>
 ::v-deep.my-account {
   .account-balance {
+    background-color: #f5f5f5;
     display: flex;
     /*左右居中*/
     justify-content: center;
+    align-items: center; /* 垂直居中 */
     width: 100%;
-    height: 384px;
+    height: 382px;
     // background-color: pink;
     .balance {
-      margin-top: 118px;
       height: 96px;
       :first-child {
         font-family: "微软雅黑 Regular", "微软雅黑";
@@ -75,10 +68,11 @@ export default {
     }
   }
   .van-nav-bar {
+    box-shadow: 0px 9px 9px #eeeeee;
     .van-nav-bar__left {
       padding: 0;
       .van-icon {
-        color: #888888;
+        color: #e9e9e9;
         &::before {
           font-size: 46px;
         }
