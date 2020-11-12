@@ -91,9 +91,10 @@ import { removeItem } from '@/public/localStorage.js';
 </template>
 
 <script>
-
+// import { getItem } from '@/utils/storage'
 import AuthorOther from './AuthorOther'
 import IntroduceBook from './IntroduceBook'
+import { mapState } from 'vuex'
 export default {
   name: 'BookDetails',
   props: {
@@ -136,13 +137,31 @@ export default {
     },
     // 书籍添加到书架功能
     addRack () {
-      this.$store.commit('setbooklocalStorage', this.value)
-      this.$toast('添加成功')
+      const index = this.booklocalStorage.findIndex(v => {
+        return v.name === this.value.name
+      })
+      if (index === -1 && this.value) {
+        this.$store.commit('setbooklocalStorage', this.value)
+        this.$toast('添加成功')
+      } else {
+        this.$toast('已经在书架了')
+      }
     },
     // 跳转到阅读界面
     readClick () {
-      this.$router.push('/bookread')
-      this.$store.commit('setList', this.value)
+      const index = this.booklocalStorage.findIndex(v => {
+        return v.name === this.value.name
+      })
+      if (this.value) {
+        this.$router.push('/bookread')
+        this.$store.commit('setList', this.value)
+      }
+      if (index === -1 && this.value) {
+        this.$toast('已自动添加书架')
+        this.$store.commit('setbooklocalStorage', this.value)
+      } else if (!this.value) {
+        this.$toast('获取文章失败')
+      }
     },
     //  点击nav左侧的返回箭头
     onClickLeft () {
@@ -188,6 +207,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['booklocalStorage']),
     chulichange () {
       if (this.value instanceof Object) {
         this.handleIsArrowShow()

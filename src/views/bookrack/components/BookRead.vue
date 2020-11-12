@@ -1,7 +1,11 @@
 <template>
   <transition name="readerslide">
     <div class="reader-container">
-      <reader-content :bookContent="content" @close="showMenuPopup = $event" />
+      <reader-content
+        :bookContent="content"
+        @close="showMenuPopup = $event"
+        v-if="!showLeft"
+      />
       <!-- 上方弹出层 -->
       <van-popup
         class="right-item"
@@ -41,7 +45,11 @@
         position="left"
         :style="{ height: '100%', width: '90%' }"
       >
-        <book-catalog :itemId="list.id" @closeCatalog="closeCatalog" />
+        <book-catalog
+          :itemId="list.id"
+          @closeCatalog="closeCatalog"
+          v-if="showLeft"
+        />
       </van-popup>
 
       <!-- 购买章节弹出层 -->

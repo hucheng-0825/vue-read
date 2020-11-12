@@ -1,18 +1,11 @@
 <template>
   <div class="top-book">
     <div class="left">
-      <van-image
-        fit="cover"
-        :src="
-          topBook
-            ? topBook[Math.round(Math.random() * topBook.length)].images
-            : ''
-        "
-      />
+      <van-image fit="cover" :src="topBook ? topBook[0].images : ''" />
     </div>
     <div class="intro-item">
       <div class="van-multi-ellipsis--l2">
-        {{ topBook[0] ? topBook[0].name + " ： " + topBook[0].intro : "" }}
+        {{ topBook ? topBook[0].name + " ： " + topBook[0].intro : "" }}
       </div>
       <!-- <span class="span-item">11111</span> -->
     </div>

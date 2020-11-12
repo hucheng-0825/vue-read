@@ -19,9 +19,13 @@
       </div>
     </div>
     <!-- 书籍列表区域 -->
-    <top-book :topBook="booklocalStorage" />
+    <top-book :topBook="content.length > 0 ? content : booklocalStorage" />
     <div class="van-list-item">
-      <book-list v-for="v in booklocalStorage" :key="v.id" :list="v" />
+      <book-list
+        v-for="v in content.length > 0 ? content : booklocalStorage"
+        :key="v.id"
+        :list="v"
+      />
     </div>
   </div>
 </template>
@@ -34,6 +38,7 @@ export default {
   name: 'BookRack',
   data () {
     return {
+      content: [],
       ellipsis: false
     }
   },
@@ -45,11 +50,28 @@ export default {
     TopBook
   },
   created () {
+    if (this.booklocalStorage.length === 0) {
+      this.getBook()
+    }
   },
   methods: {
     // 整理书架
     bookshelves () {
 
+    },
+    async getBook () {
+      try {
+        const { data } = await this.$axios.get('http://127.0.0.1:3333/booklimit', {
+          params: {
+            pagenum: 1,
+            pagesize: 6
+          }
+        })
+        console.log(data)
+        this.content.push(...data)
+      } catch (e) {
+        this.$toast('获取书籍失败')
+      }
     }
   }
 }

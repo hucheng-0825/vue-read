@@ -21,7 +21,9 @@ export default new Vuex.Store({
     Size: 30,
     show: 8,
     // 书架本地存储
-    booklocalStorage: getItem('booklocalStorage') || []
+    booklocalStorage: getItem('booklocalStorage') || [],
+    // 控制是否自动购买下一章
+    isBuy: false
   },
   mutations: {
     setBookCurrency (state, data) {
@@ -67,6 +69,9 @@ export default new Vuex.Store({
     setbooklocalStorage (state, data) {
       state.booklocalStorage.push(data)
       setItem('booklocalStorage', state.booklocalStorage)
+    },
+    setIsbuy (state, data) {
+      state.isBuy = data
     }
   },
   actions: {

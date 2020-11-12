@@ -9,9 +9,11 @@
     <div class="box-item" @click="$router.push('/bookbulkpurchase/' + bookId)">
       批量购买章节
     </div>
-    <van-checkbox v-model="checked" checked-color="#ccc" icon-size="15px"
-      >自动购买下一章</van-checkbox
-    >
+    <div @click="addBTN">
+      <van-checkbox v-model="checked" checked-color="#ccc" icon-size="15px"
+        >自动购买章节</van-checkbox
+      >
+    </div>
   </div>
 </template>
 
@@ -28,11 +30,18 @@ export default {
   },
   data () {
     return {
-      checked: true
+      checked: false
+    }
+  },
+  watch: {
+    showPurchase () {
+      if (this.showPurchase && this.isBuy) {
+        this.buyBook()
+      }
     }
   },
   computed: {
-    ...mapState(['BookCurrency', 'itemId'])
+    ...mapState(['BookCurrency', 'itemId', 'isBuy', 'showPurchase'])
   },
   methods: {
     // 购买章节功能
@@ -53,6 +62,10 @@ export default {
       } else {
         this.$toast('余额不足，请先充值！')
       }
+    },
+    addBTN () {
+      this.checked = !this.checked
+      this.$store.commit('setIsbuy', this.checked)
     }
   }
 }

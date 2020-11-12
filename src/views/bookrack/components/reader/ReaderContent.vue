@@ -40,9 +40,8 @@ export default {
   methods: {
     async NextChapter (item) {
       try {
-        console.log(this.bookContent.id + 1)
         const { data } = await this.$axios.get('http://127.0.0.1:3333/book', {
-          params: { book: this.list.id, id: getItem(`${this.bookContent.bookName}`) + 1 || this.bookContent.id + 1 }
+          params: { book: this.list.id, id: getItem(`${this.bookContent.bookName}`) + 1 || 1 + this.bookContent.id }
         })
         console.log(data)
         if (data.err === 0) {
